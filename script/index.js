@@ -69,3 +69,31 @@ buttons.forEach(item => { item.addEventListener('click', e => {
 })
 gridSlider.oninput = e => setupGrid(e.target.value);
 
+function setupGrid(gridSize) {
+    let gridTotal = gridSize * gridSize;
+    gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+    gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    for (let i = 0; i < gridTotal; i++) {
+        const gridItem = document.createElement('div');
+        gridItem.classList.add('grid-item');
+        gridItem.dataset.color = 'false';
+        gridItem.addEventListener('mouseover', draw);
+        gridItem.addEventListener('mousedown', draw);
+        gridContainer.appendChild(gridItem);
+        // if(gridContainer.children[i].classList == 'grid-item') {
+            //     gridContainer.children[i].style.backgroundColor = ERASER_COLOR;
+            // }
+        clearAll(ERASER_COLOR);
+        checkGridLines(gridItem);
+        }
+      
+        for(let i = gridContainer.childElementCount - 1 ; i >= gridTotal; i--) {
+            gridContainer.children[i].remove();
+        }
+        
+        
+    gridDisplaySize.innerHTML = `${gridSize} x ${gridSize}`;
+    if(activeMode == COLOR_MODE) {
+        colorMode.classList.add('active');
+    }
+}
