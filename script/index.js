@@ -97,3 +97,23 @@ function setupGrid(gridSize) {
         colorMode.classList.add('active');
     }
 }
+
+function checkGridLines(e) {
+    // if(gridLines.className != 'active' || e.style.border == '1px solid white') return
+    // const GREY = 'grey';
+    // const WHITE = 'white';
+    // let border = '1px solid ';
+    // if(e.style.border == (border + GREY)) {
+    //     border += WHITE;
+    // } else {
+    //     border += GREY;
+    // }
+    // e.style.border = border;
+    if(e.dataset.color == 'true' && gridLines.className == 'active'){
+        e.style.border = '1px solid white';
+    } 
+    else if (e.dataset.color == 'false' && gridLines.className == 'active') {
+        e.style.border = '1px solid grey';
+    }
+}
+
