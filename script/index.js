@@ -117,3 +117,46 @@ function checkGridLines(e) {
     }
 }
 
+function clearAll(color) {
+    const grid = document.querySelectorAll('.grid-item');
+    grid.forEach(e => e.dataset.color = 'false');
+    const grids = [...gridContainer.children];
+    for(item of grids) {
+        item.style.backgroundColor = color;
+        checkGridLines(item);
+    }
+}
+
+function draw(e) {
+    if(e.type == 'mouseover' && !mousedown) return
+    checkMode();
+    if(activeMode == COLOR_MODE || activeMode == RANDOM_MODE) {
+        e.target.dataset.color = 'true';
+    } else if(activeMode == ERASER_MODE) {
+        e.target.dataset.color = false;
+    }
+    checkGridLines(e.target);
+    e.target.style.backgroundColor = currentColor;
+}
+
+function checkMode() {
+    console.log('check');
+    if(activeMode == COLOR_MODE) {
+        currentColor = colorPicker.value;
+    } else if(activeMode == RANDOM_MODE) {
+        currentColor = rgb();
+    } else if(activeMode == ERASER_MODE) {
+        currentColor = ERASER_COLOR;
+    }
+}
+
+function rgb() {
+    const randomBetween = (min,max) => min + Math.floor(Math.random() * (max - min + 1))
+    const r = randomBetween(0, 255);
+    const g = randomBetween(0, 255);
+    const b = randomBetween(0, 255);
+    const rgb = `rgb(${r},${g},${b})`;
+    return rgb;
+}
+
+window.addEventListener('DOMContentLoaded', setupGrid(gridSize));
