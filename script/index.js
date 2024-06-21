@@ -67,31 +67,30 @@ buttons.forEach(item => { item.addEventListener('click', e => {
         }
     });
 })
-gridSlider.oninput = e => setupGrid(e.target.value);
+gridSlider.onchange = e => setupGrid(e.target.value);
 
 function setupGrid(gridSize) {
+    gridContainer.innerHTML=''; //empty grid
     let gridTotal = gridSize * gridSize;
     gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
     gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
+    const fragment = document.createDocumentFragment();
     for (let i = 0; i < gridTotal; i++) {
         const gridItem = document.createElement('div');
         gridItem.classList.add('grid-item');
         gridItem.dataset.color = 'false';
-        gridItem.addEventListener('mouseover', draw);
-        gridItem.addEventListener('mousedown', draw);
-        gridContainer.appendChild(gridItem);
-        // if(gridContainer.children[i].classList == 'grid-item') {
-            //     gridContainer.children[i].style.backgroundColor = ERASER_COLOR;
-            // }
+        // gridItem.addEventListener('mouseover', draw);
+        // gridItem.addEventListener('mousedown', draw);
+        const cloneGrid = gridItem.cloneNode(true);
+        // gridContainer.appendChild(gridItem);
+        fragment.appendChild(cloneGrid)
         clearAll(ERASER_COLOR);
         checkGridLines(gridItem);
+        gridContainer.addEventListener('mouseover',draw);
+        gridContainer.addEventListener('mousedown',draw);
+        gridContainer.appendChild(fragment);
         }
-      
-        for(let i = gridContainer.childElementCount - 1 ; i >= gridTotal; i--) {
-            gridContainer.children[i].remove();
-        }
-        
-        
+    
     gridDisplaySize.innerHTML = `${gridSize} x ${gridSize}`;
     if(activeMode == COLOR_MODE) {
         colorMode.classList.add('active');
