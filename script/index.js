@@ -71,6 +71,8 @@ gridSlider.onchange = e => setupGrid(e.target.value);
 
 function setupGrid(gridSize) {
     gridContainer.innerHTML=''; //empty grid
+    gridContainer.addEventListener('mouseover',draw);
+    gridContainer.addEventListener('mousedown',draw);
     let gridTotal = gridSize * gridSize;
     gridContainer.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
     gridContainer.style.gridTemplateRows = `repeat(${gridSize}, 1fr)`;
@@ -86,8 +88,6 @@ function setupGrid(gridSize) {
         fragment.appendChild(cloneGrid)
         clearAll(ERASER_COLOR);
         checkGridLines(gridItem);
-        gridContainer.addEventListener('mouseover',draw);
-        gridContainer.addEventListener('mousedown',draw);
         gridContainer.appendChild(fragment);
         }
     
